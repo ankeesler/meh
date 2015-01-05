@@ -1,0 +1,30 @@
+plan.txt
+Andrew Keesler
+January 4, 2015
+Plan for meh project.
+
+Amidst coders block, here is a return to math.
+
+VIEW
+  Click the gui, you get a graph node.
+  Drag from one node to another, you get an edge.
+  Side panel (left) with order of graph, number of edges.
+  Other side panel (right) with specific information about node/edge clicked on.
+    This information can be degree, editable name, color.
+  When you click on a node, it turns a color.
+  CLASSES
+    MehView - start off with all the stuff in one border layout GUI.
+  
+MODEL
+  We will need a full graph API.
+  The Graph object will literally be the data backing.
+  CLASSES
+    Graph - the actual graph, with all the usual APIs.
+    SerializedGraph - a graph stored in a flat file.
+
+CONTROLLER
+  Catch the clicks on the screen and either
+    1) update the view or
+    2) update the model and then update the view.
+  CLASSES
+    MehViewController - has all the listeners for like mouse touches and drags.
