@@ -1,10 +1,18 @@
 # Ant sucks, and so does Eclipse.
 
-all: test
+all: run-meh
+
+# FILES
 
 CORE_DIR=core
 VIEW_DIR=view
 GRAPH_DIR=graph
+
+CORE_CLASSES=$(patsubst %, $(CORE_DIR)/%.java, MehDriver MehController)
+VIEW_CLASSES=$(patsubst %, $(VIEW_DIR)/%.java, MehView GraphView)
+GRAPH_CLASSES=$(patsubst %, $(GRAPH_DIR)/%.java, Graph GraphLibrary GraphNode)
+
+SOURCE_CLASSES=$(CORE_CLASSES) $(VIEW_CLASSES) $(GRAPH_CLASSES)
 
 SHELL=sh
 
@@ -22,7 +30,7 @@ $(BUILD_DIR_CREATED):
 	mkdir $(BUILD_DIR)
 	touch $@
 
-meh: $(patsubst %, %/*.java, $(SRC_DIRS)) | $(BUILD_DIR_CREATED)
+meh: $(SOURCE_CLASSES) | $(BUILD_DIR_CREATED)
 	javac $^ -d $(BUILD_DIR)
 
 run-meh: meh
