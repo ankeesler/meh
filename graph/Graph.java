@@ -25,6 +25,12 @@ public class Graph {
     this.name = name;
   }
 
+  /** Get the name of this graph.
+   */
+  public String name() {
+    return name;
+  }
+
   /** What the order of the graph is.
    */
   public int order() { return adjList.keySet().size(); }
