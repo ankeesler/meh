@@ -12,6 +12,19 @@ public class Graph {
   private Map<GraphNode, Set<GraphNode>> adjList
     = new LinkedHashMap<GraphNode, Set<GraphNode>>();
 
+  private String name;
+
+  // Package API for creating and empty graph with default name.
+  Graph() {
+    this.name = "New Graph";
+  }
+
+  /** Create a new graph with a name.
+   */
+  public Graph(String name) {
+    this.name = name;
+  }
+
   /** What the order of the graph is.
    */
   public int order() { return adjList.keySet().size(); }
