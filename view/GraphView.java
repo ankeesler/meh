@@ -11,10 +11,13 @@ import javax.swing.*;
 public class GraphView extends JPanel {
 
   public void paintComponent(Graphics g) {
-    setBackground(Color.WHITE);
+    super.paintComponent(g);
+    Graphics2D g2 = (Graphics2D)g;
+    Dimension size = getSize();
 
-    g.setColor(Color.BLACK);
-    g.drawOval(25, 25, 25, 25);
+    g2.setColor(Color.WHITE);
+    g2.drawRect(0, 0, size.width, size.height);
+    g2.fillRect(0, 0, size.width, size.height);
   }
 
 }
