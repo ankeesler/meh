@@ -8,7 +8,7 @@ import view.*;
  * @author Andrew Keesler
  * @date January 11, 2015
  */
-public class MehController {
+public class MehController implements IGraphViewBuddy {
 
   private Graph graph;
   private MehView view;
@@ -17,7 +17,7 @@ public class MehController {
    */
   public MehController() {
     graph = new Graph("New Graph");
-    view = new MehView();
+    view = new MehView(this);
     updateView();
   }
 
@@ -25,5 +25,20 @@ public class MehController {
     view.setGraphTitle(graph.name());
     view.setGraphOrder(graph.order());
     view.setGraphEdges(graph.edges());
+  }
+
+  @Override
+  public void nodeCreated() {
+    Debug.println("nodeCreated()");
+  }
+
+  @Override
+  public void edgeCreated() {
+    Debug.println("edgeCreated()");
+  }
+  
+  @Override
+  public void nodeTouched() {
+    Debug.println("nodeTouched()");
   }
 }

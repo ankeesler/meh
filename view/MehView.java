@@ -27,7 +27,7 @@ public class MehView extends JFrame {
 
   /** Create a new meh view.
    */
-  public MehView() {
+  public MehView(IGraphViewBuddy graphViewBuddy) {
     super("Meh");
 
     // Set size, location, layout, visibility, close operation.
@@ -52,7 +52,7 @@ public class MehView extends JFrame {
     rightPanel.add((nodeDegree = new JLabel("Node degree: 0")));
 
     // The graph view (in the middle).
-    add((graphView = new GraphView()), BorderLayout.CENTER);
+    add((graphView = new GraphView(graphViewBuddy)), BorderLayout.CENTER);
 
     // Force a layout.
     validate();
