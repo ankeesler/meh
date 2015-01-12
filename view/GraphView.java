@@ -66,6 +66,9 @@ public class GraphView
     Graphics2D g2 = (Graphics2D)g;
     Dimension size = getSize();
 
+    // Set the stroke.
+    g2.setStroke(new BasicStroke(5));
+
     // Clear the background.
     g2.setColor(Color.WHITE);
     g2.drawRect(0, 0, size.width, size.height);
