@@ -88,20 +88,27 @@ public class GraphView
     // Is the location within any of the nodes?
     for (NodeView nodeView : nodeViews) {
       if (nodeView.contains(e.getX(), e.getY())) {
-        // TODO: handle the touch of a node.
+        unselectAllNodeViewsBut(nodeView);
         buddy.nodeTouched();
+        repaint();
         return;
       }
     }
 
     // Well the user must want to create a node.
-    nodeViews.add(new NodeView(e.getX(), e.getY(), defaultRadius));
+    NodeView nv = new NodeView(e.getX(), e.getY(), defaultRadius);
+    unselectAllNodeViewsBut(nv);
+    nodeViews.add(nv);
     buddy.nodeCreated();
-
-    // Repaint.
     repaint();
   }
-  
+
+  private void unselectAllNodeViewsBut(NodeView nv) {
+    for (NodeView nodeView : nodeViews)
+      nodeView.setSelected(false);
+    nv.setSelected(true);
+  }
+
   @Override
   public void mouseEntered(MouseEvent e) {}
   
