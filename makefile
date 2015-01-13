@@ -2,17 +2,26 @@
 
 all: run-meh
 
-# FILES
-
 CORE_DIR=core
+CORE_CLASSES=MehDriver \
+             MehController
+CORE_SRC=$(patsubst %, $(CORE_DIR)/%.java, $(CORE_CLASSES))
+
 VIEW_DIR=view
+VIEW_CLASSES=EdgeView \
+             GraphView \
+						 IGraphViewBuddy \
+						 MehView \
+						 NodeView
+VIEW_SRC=$(patsubst %, $(VIEW_DIR)/%.java, $(VIEW_CLASSES))
+
 GRAPH_DIR=graph
+GRAPH_CLASSES=Graph \
+              GraphLibrary \
+							GraphNode
+GRAPH_SRC=$(patsubst %, $(GRAPH_DIR)/%.java, $(GRAPH_CLASSES))
 
-CORE_CLASSES=$(patsubst %, $(CORE_DIR)/%.java, MehDriver MehController)
-VIEW_CLASSES=$(patsubst %, $(VIEW_DIR)/%.java, MehView GraphView)
-GRAPH_CLASSES=$(patsubst %, $(GRAPH_DIR)/%.java, Graph GraphLibrary GraphNode)
-
-SOURCE_CLASSES=$(CORE_CLASSES) $(VIEW_CLASSES) $(GRAPH_CLASSES)
+MEH_SRC=$(GRAPH_SRC) $(VIEW_SRC) $(CORE_SRC)
 
 SHELL=sh
 
@@ -30,7 +39,7 @@ $(BUILD_DIR_CREATED):
 	mkdir $(BUILD_DIR)
 	touch $@
 
-meh: $(SOURCE_CLASSES) | $(BUILD_DIR_CREATED)
+meh: $(MEH_SRC) | $(BUILD_DIR_CREATED)
 	javac $^ -d $(BUILD_DIR)
 
 run-meh: meh
