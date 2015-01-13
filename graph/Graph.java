@@ -50,6 +50,20 @@ public class Graph {
     return adjList.keySet().toArray(new GraphNode[0]);
   }
   
+  /** Get the degree of the graph node, or -1 if the graph
+   * does not contain the node.
+   */
+  public int degree(GraphNode node) {
+    if (!adjList.keySet().contains(node))
+      return -1;
+    
+    int degree = 0;
+    for (GraphNode otherNode : adjList.keySet())
+      if (adjList.get(otherNode).contains(node))
+        degree ++;
+    return degree;
+  }
+  
   /** Add a graph node that has no neighbors initially.
    *  Returns true iff the node was successfully added.
    */

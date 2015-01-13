@@ -25,11 +25,14 @@ public class GraphTest extends McgooTest {
           expect(g.add(node1));
           expect(g.order() == 1);
           expect(g.edges() == 0);
+          expect(g.degree(node1) == 0);
 
           GraphNode<Integer> node2 = new GraphNode<Integer>(2);
           expect(g.add(node1, node2));
           expect(g.order() == 2);
           expect(g.edges() == 1);
+          expect(g.degree(node1) == 0);
+          expect(g.degree(node2) == 1);
 
           GraphNode<Integer> node3 = new GraphNode<Integer>(3);
           GraphNode<Integer> node4 = new GraphNode<Integer>(4);
@@ -39,6 +42,8 @@ public class GraphTest extends McgooTest {
           expect(g.add(node2, node3));
           expect(g.order() == 4);
           expect(g.edges() == 3);
+          expect(g.degree(node3) == 1);
+          expect(g.degree(node4) == 1);
 
           // Remove.
           expect(g.remove(node4));
@@ -120,12 +125,16 @@ public class GraphTest extends McgooTest {
           expect(path[1], nodes[2]);
           expect(path[2], nodes[3]);
           expect(path[3], nodes[0]);
+          
+          for (GraphNode node : nodes)
+            expect(c4.degree(node) == 1);
 
           // K4.
           Graph k4 = GraphLibrary.K(4);
           nodes = k4.nodes();
 
           for (GraphNode node1 : nodes) {
+            expect(k4.degree(node1) == 4);
             for (GraphNode node2 : nodes) {
               path = k4.path(node1, node2);
               expect((node1 == node2
