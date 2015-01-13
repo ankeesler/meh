@@ -23,10 +23,16 @@ public class GraphView
   implements MouseListener, MouseWheelListener, MouseMotionListener {
 
   private Set<NodeView> nodeViews = new HashSet<NodeView>();
+  private Set<EdgeView> edgeViews = new HashSet<EdgeView>();
 
   private IGraphViewBuddy buddy;
 
   private double defaultRadius = 30;
+  
+  private Map<EdgeView, NodeView> startingNodeViews
+    = new HashMap<EdgeView, NodeView>();
+  private Collection<EdgeView> creatingEdges
+      = new ArrayList<EdgeView>();
 
   /** Create a new graph view.
    */
@@ -56,6 +62,16 @@ public class GraphView
     for (NodeView nodeView : nodeViews) {
       g2.setColor(nodeView.color());
       g2.draw(nodeView);
+    }
+    
+    // Draw all of the edge views.
+    for (EdgeView ev : creatingEdges) {
+      g2.setColor(ev.color());
+      g2.draw(ev);
+    }
+    for (EdgeView ev : edgeViews) {
+      g2.setColor(ev.color());
+      g2.draw(ev);
     }
   }
 
@@ -100,13 +116,50 @@ public class GraphView
   public void mousePressed(MouseEvent e) {}
 
   @Override
-  public void mouseReleased(MouseEvent e) {}
+  public void mouseReleased(MouseEvent e) {
+    // If you are on top of a node, make the creatingEdges permanent.
+    // Regardless, delete the creating edges.
+    if (creatingEdges.size() != 0) {
+      for (NodeView nv : nodeViews) {
+        if (nv.contains(e.getX(), e.getY())) {
+          for (EdgeView ev : creatingEdges) {
+            ev.setEnd(nv.center().x, nv.center().y, true); // really the end
+            edgeViews.add(ev);
+            buddy.edgeCreated(startingNodeViews.get(ev), nv);
+          }
+        }
+      }
+    }
+    creatingEdges.clear();
+    repaint();
+  }
   
   @Override
   public void mouseWheelMoved(MouseWheelEvent e) {}
 
   @Override
-  public void mouseDragged(MouseEvent e) {}
+  public void mouseDragged(MouseEvent e) {
+    if (creatingEdges.size() == 0) {
+      // Create the edges.
+      for (NodeView nodeView : nodeViews) {
+        if (nodeView.isSelected()) {
+          EdgeView ev = new EdgeView(nodeView.center().x,
+                                         nodeView.center().y,
+                                         e.getX(),
+                                         e.getY());
+          creatingEdges.add(ev);
+          startingNodeViews.put(ev, nodeView);
+        }
+      }
+    } else {
+      // Update the edges.
+      for (EdgeView edgeView : creatingEdges) {
+        edgeView.setEnd(e.getX(), e.getY(), false); // not the end
+      }
+    }
+    
+    repaint();
+  }
 
   @Override
   public void mouseMoved(MouseEvent e) {}

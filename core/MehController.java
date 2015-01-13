@@ -34,6 +34,8 @@ public class MehController implements IGraphViewBuddy {
       view.setNodeName(node.toString());
       view.setNodeDegree(graph.degree(node));
     }
+    
+    Debug.println(Debug.DebugChannel.CORE, "graph is now: " + graph);
   }
 
   @Override
@@ -47,13 +49,15 @@ public class MehController implements IGraphViewBuddy {
     
     // Update view.
     updateView(nodeView);
-    
-    Debug.println(Debug.DebugChannel.CORE, "graph is now: " + graph);
   }
 
   @Override
-  public void edgeCreated() {
+  public void edgeCreated(NodeView from, NodeView to) {
     Debug.println(Debug.DebugChannel.CORE, "edgeCreated()");
+    
+    graph.add(viewsToNodes.get(from), viewsToNodes.get(to));
+    
+    updateView(from);
   }
   
   @Override

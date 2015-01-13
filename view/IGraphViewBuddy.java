@@ -16,9 +16,10 @@ public interface IGraphViewBuddy {
    */
   public void nodeCreated(NodeView nodeView);
 
-  /** Called when someone created an edge.
+  /** Called when someone created an edge. The NodeViews
+   *  from which and to which the edge was created are also passed.
    */
-  public void edgeCreated();
+  public void edgeCreated(NodeView from, NodeView to);
   
   /** Called when a node is touched by a user. The touched
    *  graphView is passed as an argument.

@@ -27,6 +27,11 @@ public class NodeView extends Ellipse2D.Double {
   public void setSelected(boolean yes) {
     color = (yes ? SELECTED_COLOR : DEFAULT_COLOR);
   }
+  
+  /** Returns whether or not the node view is selected. */
+  public boolean isSelected() {
+    return color == SELECTED_COLOR;
+  }
 
   /** Get the color. */
   public Color color() {
@@ -36,6 +41,11 @@ public class NodeView extends Ellipse2D.Double {
   /** Get the id. */
   public int id() {
     return id;
+  }
+  
+  /** Get the point at the center of the node view. */
+  public Point2D.Double center() {
+    return new Point2D.Double(this.x+(this.width/2), this.y+(this.width/2));
   }
   
   @Override
