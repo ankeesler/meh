@@ -22,28 +22,6 @@ public class GraphView
   extends JPanel
   implements MouseListener, MouseWheelListener, MouseMotionListener {
 
-  // The node object that the graph view will draw.
-  private static class NodeView extends Ellipse2D.Double {
-    private Color color;
-
-    private static final Color DEFAULT_COLOR = Color.BLACK;
-    private static final Color SELECTED_COLOR = Color.RED;
-    
-    // Create a node view with a center and a radius.
-    public NodeView(double centerX, double centerY, double radius) {
-      super(centerX - radius, centerY - radius, radius*2, radius*2);
-      this.color = DEFAULT_COLOR;
-    }
-
-    // Set whether or not the node is selected.
-    public void setSelected(boolean yes) {
-      color = (yes ? SELECTED_COLOR : DEFAULT_COLOR);
-    }
-
-    // Get the color.
-    public Color color() { return color; }
-  }
-
   private Set<NodeView> nodeViews = new HashSet<NodeView>();
 
   private IGraphViewBuddy buddy;
@@ -76,7 +54,7 @@ public class GraphView
 
     // Draw all of the node views.
     for (NodeView nodeView : nodeViews) {
-      g2.setColor(nodeView.color);
+      g2.setColor(nodeView.color());
       g2.draw(nodeView);
     }
   }
@@ -92,7 +70,7 @@ public class GraphView
     for (NodeView nodeView : nodeViews) {
       if (nodeView.contains(e.getX(), e.getY())) {
         unselectAllNodeViewsBut(nodeView);
-        buddy.nodeTouched();
+        buddy.nodeTouched(nodeView);
         repaint();
         return;
       }
@@ -102,7 +80,7 @@ public class GraphView
     NodeView nv = new NodeView(e.getX(), e.getY(), defaultRadius);
     unselectAllNodeViewsBut(nv);
     nodeViews.add(nv);
-    buddy.nodeCreated();
+    buddy.nodeCreated(nv);
     repaint();
   }
 

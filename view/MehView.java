@@ -75,5 +75,15 @@ public class MehView extends JFrame {
   public void setGraphEdges(int edges) {
     graphEdges.setText(String.format("Edges: %d", edges));
   }
+  
+  /** Set the node name. */
+  public void setNodeName(String name) {
+    nodeName.setText(name);
+  }
+  
+  /** Set the degree of the selected node. */
+  public void setNodeDegree(int degree) {
+    nodeDegree.setText("Degree: " + degree);
+  }
 
 }

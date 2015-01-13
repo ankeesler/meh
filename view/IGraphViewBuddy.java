@@ -11,15 +11,17 @@ package view;
  */
 public interface IGraphViewBuddy {
 
-  /** Called when someone created a node.
+  /** Called when someone created a node. The created
+   *  graphView is passed as an argument.
    */
-  public void nodeCreated();
+  public void nodeCreated(NodeView nodeView);
 
   /** Called when someone created an edge.
    */
   public void edgeCreated();
   
-  /** Called when a node is touched by a user.
+  /** Called when a node is touched by a user. The touched
+   *  graphView is passed as an argument.
    */
-  public void nodeTouched();
+  public void nodeTouched(NodeView nodeView);
 }
