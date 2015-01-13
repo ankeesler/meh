@@ -61,7 +61,7 @@ public class GraphView
     // Draw all of the node views.
     for (NodeView nodeView : nodeViews) {
       g2.setColor(nodeView.color());
-      g2.draw(nodeView);
+      g2.fill(nodeView);
     }
     
     // Draw all of the edge views.
